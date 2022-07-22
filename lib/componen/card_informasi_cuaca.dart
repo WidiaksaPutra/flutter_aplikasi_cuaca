@@ -5,8 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CardInformasiCuacaMax extends StatelessWidget {
-  final String StringUkuranCard;
-  const CardInformasiCuacaMax({ Key? key, required this.StringUkuranCard }) : super(key: key);
+  final String StringUkuranCard,nameLokasi, icon, mainCuaca, description, dateTime, temperatur, windSpeed, day, rain, humidity, clouds;
+
+  CardInformasiCuacaMax({ Key? key, 
+  required this.StringUkuranCard,
+  this.nameLokasi = "-", this.icon = "-", this.mainCuaca = "-", this.description = "-",
+  this.temperatur = "0.0", this.windSpeed = "0.0", this.day = "0.0", this.rain = "0.0",
+  this.humidity = "0", this.clouds = "0",
+  this.dateTime = "-"}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +30,8 @@ class CardInformasiCuacaMax extends StatelessWidget {
         ]
       ),
       child: (StringUkuranCard == "max") 
-      ? const IsiCardInformasiMax()
-      : const IsiCardInformasiMin()
+      ? IsiCardInformasiMax(nameLokasi: nameLokasi, icon: icon, mainCuaca: mainCuaca, temperatur: temperatur, windSpeed: windSpeed, humidity: humidity, clouds: clouds, dateTime: dateTime)
+      : IsiCardInformasiMin(icon: icon, description: description, day: day, windSpeed: windSpeed, rain: rain, humidity: humidity)
     );
   }
 }
