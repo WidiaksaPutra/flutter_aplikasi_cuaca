@@ -9,7 +9,7 @@ class IsiCardInformasiMin extends StatefulWidget {
   const IsiCardInformasiMin({ Key? key, 
     required this.icon, required this.description, 
     required this.day, required this.windSpeed, required this.rain,
-    required this.humidity}) : super(key: key);
+    required this.humidity, }) : super(key: key);
 
   @override
   State<IsiCardInformasiMin> createState() => _IsiCardInformasiMinState();
@@ -24,7 +24,7 @@ class _IsiCardInformasiMinState extends State<IsiCardInformasiMin> {
       width: size.width.w,
       height: (size.width.h - 50.h),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -36,9 +36,13 @@ class _IsiCardInformasiMinState extends State<IsiCardInformasiMin> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
           Image.network('http://openweathermap.org/img/wn/${widget.icon}@2x.png'),
-          Column(children: [
+          Column(children: [ 
             Text("Tomorrow", style: TextStyle(fontSize: 18.sp, color: whiteColor, fontWeight: FontWeight.bold)),
-            Text("${widget.day}°", style: TextStyle(fontSize: 40.sp, color: whiteColor, fontWeight: FontWeight.bold)),
+            Row(children: [
+                Text("${widget.day}°", style: TextStyle(fontSize: 50.sp, color: whiteColor, fontWeight: FontWeight.bold)),
+                // Text(data)
+              ],
+            ),
             Text(widget.description, style: TextStyle(fontSize: 18.sp, color: whiteShadowColor, fontWeight: FontWeight.bold)),
           ],)
         ],),

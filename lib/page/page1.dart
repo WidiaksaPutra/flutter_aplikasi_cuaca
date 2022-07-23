@@ -2,6 +2,7 @@ import 'package:aplikasi_cuaca/componen/card_informasi_cuaca.dart';
 import 'package:aplikasi_cuaca/componen/constans.dart';
 import 'package:aplikasi_cuaca/componen/container_bottom_cuaca.dart';
 import 'package:aplikasi_cuaca/componen/skeleton.dart';
+import 'package:aplikasi_cuaca/page/class/class_bottom_cuaca.dart';
 import 'package:aplikasi_cuaca/page/page2.dart';
 import 'package:aplikasi_cuaca/service/classGeolocation.dart';
 import 'package:flutter/material.dart';
@@ -59,22 +60,24 @@ class _Page1State extends State<Page1> with Geolocation{
                   temperatur: weatherNow!.main!.temp!.round().toString(), windSpeed: weatherNow!.wind!.speed!.round().toString(),
                   humidity: weatherNow!.main!.humidity!.round().toString(), clouds: weatherNow!.clouds!.all!.round().toString(),
                   dateTime: dateTimeNow.toString()),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                  Text("Today", style: TextStyle(fontSize: 20.sp, color: Colors.white),),
-                  TextButton(
-                    onPressed: () async {
-                      Get.to(const Page2());
-                    },
-                    child: Row(children: [
-                      Text("7 days ", style: TextStyle(fontSize: 15.sp, color: Colors.grey)),
-                      Icon(Icons.arrow_forward_ios_outlined, color: Colors.grey, size: 13.r,)
-                    ],),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                    Text("Today", style: TextStyle(fontSize: 20.sp, color: Colors.white),),
+                    TextButton(
+                      onPressed: () async {
+                        Get.to(const Page2());
+                      },
+                      child: Row(children: [
+                        Text("7 days ", style: TextStyle(fontSize: 15.sp, color: Colors.grey)),
+                        Icon(Icons.arrow_forward_ios_outlined, color: Colors.grey, size: 13.r,)
+                      ],),
+                    ),],
                   ),
-              ],),
-              ContainerBottomCuaca(temperatur: temperatur, icon: icon, jamCuacaList: jamCuacaList),
-              
+                ),
+                ContainerBottomCuaca(temperatur: temperatur, icon: icon, jamCuacaList: jamCuacaList),      
               ]);
           }else{
             return Column(

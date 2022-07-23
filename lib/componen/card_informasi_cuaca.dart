@@ -18,16 +18,33 @@ class CardInformasiCuacaMax extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: blueColor,
-        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(60.r), bottomRight: Radius.circular(60.r)),
         boxShadow: [
           BoxShadow(
-            color: blueShadowColor,
-            spreadRadius: 0.5.r,
-            offset: Offset(0, 7.r),
-            blurRadius: 5.0.r,
+            color: blueColorShadow3,
+            spreadRadius: -20.r,
+            offset: Offset(0.r, 70.r),
+            blurRadius: 50.0.r,
           ),
-        ]
+          BoxShadow(
+            color: blueColorShadow2,
+            spreadRadius: -4.r,
+            offset: Offset(0.r, 15.r),
+            blurRadius: 3.0.r,
+          ),
+          BoxShadow(
+            color: blueColorShadow1,
+            spreadRadius: 1.5.r,
+          ),
+        ],
+        gradient: const LinearGradient(
+          colors: [
+            blueColor1,
+            blueColor2
+          ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter
+        ),
+        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(60.r), bottomRight: Radius.circular(60.r)),
       ),
       child: (StringUkuranCard == "max") 
       ? IsiCardInformasiMax(nameLokasi: nameLokasi, icon: icon, mainCuaca: mainCuaca, temperatur: temperatur, windSpeed: windSpeed, humidity: humidity, clouds: clouds, dateTime: dateTime)

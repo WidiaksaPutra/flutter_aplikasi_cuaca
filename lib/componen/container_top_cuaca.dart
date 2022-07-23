@@ -48,9 +48,9 @@ class IsiContinerTop extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 4.w),
         child: SizedBox(
-          height: 150.h,
+          height: 100.h,
           child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 17.0.w, vertical: 25.0.h),
+          padding: EdgeInsets.symmetric(horizontal: 17.0.w, vertical: 5.0.h),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [

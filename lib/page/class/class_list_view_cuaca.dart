@@ -17,7 +17,7 @@ class ListViewCuaca extends StatefulWidget {
 }
 
 class _ListViewCuacaState extends State<ListViewCuaca>{
-
+  
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -31,7 +31,7 @@ class _ListViewCuacaState extends State<ListViewCuaca>{
           child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Text(DateFormat('EEEE').format(DateTime.parse(widget.hari[index])), style: TextStyle(fontSize: 20.sp, color: whiteShadowColor)),
+            Text(DateFormat('E').format(DateTime.parse(widget.hari[index])).toString(), style: TextStyle(fontSize: 20.sp, color: whiteShadowColor)),
             Row(
               children: [
                 Image.network('http://openweathermap.org/img/wn/${widget.icon[index]}.png'),

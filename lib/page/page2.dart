@@ -1,6 +1,6 @@
 import 'package:aplikasi_cuaca/componen/card_informasi_cuaca.dart';
 import 'package:aplikasi_cuaca/componen/constans.dart';
-import 'package:aplikasi_cuaca/componen/list_view_cuaca.dart';
+import 'package:aplikasi_cuaca/page/class/class_list_view_cuaca.dart';
 import 'package:aplikasi_cuaca/componen/skeleton.dart';
 import 'package:aplikasi_cuaca/model/weather_daily.dart';
 import 'package:aplikasi_cuaca/service/classGeolocation.dart';
