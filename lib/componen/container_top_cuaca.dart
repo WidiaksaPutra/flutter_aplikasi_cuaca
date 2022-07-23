@@ -55,8 +55,8 @@ class IsiContinerTop extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Image.network('http://openweathermap.org/img/wn/$icon.png'),
-                Text(param1, textAlign: TextAlign.center, style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.bold, color: whiteColor),),
-                Text(param2, textAlign: TextAlign.center, style: TextStyle(fontSize: 13.sp, color: whiteShadowColor)),
+                Text(param1, textAlign: TextAlign.center, style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.bold, color: whiteColor, fontFamily: "OpenSauceSans"),),
+                Text(param2, textAlign: TextAlign.center, style: TextStyle(fontSize: 12.sp, color: whiteShadowColor, fontFamily: "OpenSauceSans")),
               ],  
             ),
           ),

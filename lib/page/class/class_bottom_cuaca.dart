@@ -5,7 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ContainerBottomCuaca extends StatefulWidget {
   final List<String> temperatur, icon, jamCuacaList;
-  const ContainerBottomCuaca({ Key? key, required this.temperatur, required this.icon, required this.jamCuacaList}) : super(key: key);
+  final String jamCuacaNow;
+  const ContainerBottomCuaca({ Key? key, required this.temperatur, required this.icon,
+   required this.jamCuacaList, required this.jamCuacaNow}) : super(key: key);
 
   @override
   State<ContainerBottomCuaca> createState() => _ContainerBottomCuaca();
@@ -21,10 +23,11 @@ class _ContainerBottomCuaca extends State<ContainerBottomCuaca> {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           for(int a = 0 ; a < widget.temperatur.length ; a ++)...[
-            IsiContinerBottom(
+            ContinerBottom(
+              light : (DateFormat('HH', 'id').format(DateTime.parse(widget.jamCuacaList[a])).toString() == DateFormat('HH', 'id').format(DateTime.parse(widget.jamCuacaNow)).toString()) ? "light" : "dark",
               param1: widget.temperatur[a],
               icon: widget.icon[a],
-              param2: DateFormat('HH:mm', 'id').format(DateTime.parse(widget.jamCuacaList[a].toString())).toString()
+              param2: DateFormat('hh:mm', 'id').format(DateTime.parse(widget.jamCuacaList[a])).toString(),
             ),
           ]
         ],

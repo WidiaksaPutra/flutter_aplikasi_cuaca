@@ -1,7 +1,8 @@
 import 'package:aplikasi_cuaca/componen/card_informasi_cuaca.dart';
 import 'package:aplikasi_cuaca/componen/constans.dart';
-import 'package:aplikasi_cuaca/componen/container_bottom_cuaca.dart';
 import 'package:aplikasi_cuaca/componen/skeleton.dart';
+import 'package:aplikasi_cuaca/model/weather_hourly.dart';
+import 'package:aplikasi_cuaca/model/weather_now.dart';
 import 'package:aplikasi_cuaca/page/class/class_bottom_cuaca.dart';
 import 'package:aplikasi_cuaca/page/page2.dart';
 import 'package:aplikasi_cuaca/service/classGeolocation.dart';
@@ -18,7 +19,15 @@ class Page1 extends StatefulWidget {
 }
 
 class _Page1State extends State<Page1> with Geolocation{
+  late Future<WeatherHourly> futures1 = getDataWeatherHourly();
+  late Future<WeatherNow> futures2 = getDataWeatherNow(); 
   
+  Future _refreshPage() async{
+    await Future.delayed(const Duration(milliseconds: 500));
+    futures1 = getDataWeatherHourly();
+    futures2 = getDataWeatherNow();
+  }
+
   @override
   void initState() {
     initializeDateFormatting();
@@ -27,8 +36,7 @@ class _Page1State extends State<Page1> with Geolocation{
 
   Future<dynamic> fetchData() async {
     var responses = await Future.wait([
-      getDataWeatherNow(),
-      getDataWeatherHourly(),
+      futures1,futures2
     ]);
     return "${responses[0]}, ${responses[1]}";
   }
@@ -52,8 +60,9 @@ class _Page1State extends State<Page1> with Geolocation{
               icon.add(weatherHour!.hourly[i].weather[0].icon.toString());
             }
             late DateTime dateTimeNow = DateTime.fromMillisecondsSinceEpoch(weatherNow!.dt!.toInt() * 1000);
-            return  
-              Column(children: [
+            return RefreshIndicator(
+              onRefresh: _refreshPage, 
+              child: Column(children: [
                 CardInformasiCuacaMax(
                   StringUkuranCard: "max", 
                   nameLokasi: weatherNow!.name.toString(), icon: weatherNow!.weather[0].icon.toString(), mainCuaca: weatherNow!.weather[0].main.toString(),
@@ -61,24 +70,25 @@ class _Page1State extends State<Page1> with Geolocation{
                   humidity: weatherNow!.main!.humidity!.round().toString(), clouds: weatherNow!.clouds!.all!.round().toString(),
                   dateTime: dateTimeNow.toString()),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                  padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                    Text("Today", style: TextStyle(fontSize: 20.sp, color: Colors.white),),
+                    Text("Today", style: TextStyle(fontSize: 20.sp, color: Colors.white, fontFamily: "OpenSauceSans"),),
                     TextButton(
                       onPressed: () async {
                         Get.to(const Page2());
                       },
                       child: Row(children: [
-                        Text("7 days ", style: TextStyle(fontSize: 15.sp, color: Colors.grey)),
+                        Text("7 days ", style: TextStyle(fontSize: 15.sp, color: Colors.grey, fontFamily: "OpenSauceSans")),
                         Icon(Icons.arrow_forward_ios_outlined, color: Colors.grey, size: 13.r,)
                       ],),
                     ),],
                   ),
                 ),
-                ContainerBottomCuaca(temperatur: temperatur, icon: icon, jamCuacaList: jamCuacaList),      
-              ]);
+                ContainerBottomCuaca(temperatur: temperatur, icon: icon, jamCuacaList: jamCuacaList, jamCuacaNow: dateTimeNow.toString()),      
+              ]),
+            );
           }else{
             return Column(
               children: [

@@ -26,20 +26,27 @@ class _IsiCardInformasiMaxState extends State<IsiCardInformasiMax>{
       height: (size.height.h - 230.h),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children:[
+        children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              const Icon(Icons.location_on_rounded, color: Colors.white),
-              Text(widget.nameLokasi, style: TextStyle(fontSize: 20.sp, color: whiteColor, fontWeight: FontWeight.bold)),
-          ],),
+              const Icon(Icons.grid_view_rounded, color: Colors.white), 
+              Row(
+                children: [
+                  const Icon(Icons.location_on_rounded, color: Colors.white),
+                  Text(widget.nameLokasi, style: TextStyle(fontSize: 20.sp, color: whiteColor, fontWeight: FontWeight.bold, fontFamily: "OpenSauceSans")),
+                ],
+              ),
+              const Icon(Icons.more_vert, color: Colors.white),
+            ],
+          ),
           Container(
-            width: 100.w,
+            width: 130.w,
             decoration: BoxDecoration(
               border: Border.all(width: 1.w, color: whiteColor),
               borderRadius: BorderRadius.all(Radius.circular(25.r)),
             ),
-            child: Padding(padding: EdgeInsets.symmetric(vertical: 3.h), child: Text("Updating", style: TextStyle(fontSize: 13.sp, color: whiteColor, fontWeight: FontWeight.bold) ,textAlign: TextAlign.center)),
+            child: Padding(padding: EdgeInsets.symmetric(vertical: 3.h), child: Text("Updated ${DateFormat('mm', 'id').format(DateTime.now()).toString()}min ago", style: TextStyle(fontSize: 12.sp, color: whiteColor, fontWeight: FontWeight.bold, fontFamily: "OpenSauceSans") ,textAlign: TextAlign.center)),
           ),
           Image.network('http://openweathermap.org/img/wn/${widget.icon}@2x.png'),
           Column(
@@ -51,14 +58,15 @@ class _IsiCardInformasiMaxState extends State<IsiCardInformasiMax>{
                   Text(" ${widget.temperatur}", 
                     style: TextStyle(fontSize: 100.sp, 
                       color: whiteColor, 
-                      fontWeight: FontWeight.bold, 
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "OpenSauceSans", 
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  Text("°", style: TextStyle(fontSize: 60.sp, color: whiteShadowColor, fontWeight: FontWeight.bold)),
+                  Text("°", style: TextStyle(fontSize: 60.sp, color: whiteShadowColor, fontWeight: FontWeight.bold, fontFamily: "OpenSauceSans")),
               ],),
-              Text(widget.mainCuaca, style: TextStyle(fontSize: 30.sp, color: whiteColor, fontWeight: FontWeight.bold)),
-              Text("Today, ${DateFormat('dd MMMM').format(DateTime.parse(widget.dateTime)).toString()}", style: TextStyle(fontSize: 15.sp, color: whiteShadowColor, fontWeight: FontWeight.bold)),
+              Text(widget.mainCuaca, style: TextStyle(fontSize: 30.sp, color: whiteColor, fontWeight: FontWeight.bold, fontFamily: "OpenSauceSans")),
+              Text("Today, ${DateFormat('dd MMMM').format(DateTime.parse(widget.dateTime)).toString()}", style: TextStyle(fontSize: 15.sp, color: whiteShadowColor, fontWeight: FontWeight.bold, fontFamily: "OpenSauceSans")),
             ],
           ),
           ContainerTopCuaca(icon: widget.icon.toString(), speed: widget.windSpeed, humidity: widget.humidity, clouds: widget.clouds),

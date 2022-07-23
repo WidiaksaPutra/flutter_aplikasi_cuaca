@@ -7,6 +7,7 @@ import 'package:aplikasi_cuaca/service/classGeolocation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 
 class Page2 extends StatefulWidget {
   const Page2({ Key? key }) : super(key: key);
@@ -20,6 +21,10 @@ class _Page2State extends State<Page2> with Geolocation{
   final ScrollController scrollController = ScrollController();
   bool loading = false;
 
+  Future _refreshPage() async{
+    await Future.delayed(const Duration(milliseconds: 500));
+    futures = getDataWeatherDaily();
+  }
 
   @override
   void initState(){
@@ -58,37 +63,51 @@ class _Page2State extends State<Page2> with Geolocation{
         future: futures,
         builder: (context, snapshot){
           if(snapshot.hasData){
-            late List<String> dateTimeDaily = []; 
             late List<String> iconDaily = []; 
             late List<String> mainDaily = [];
             late List<String> tempDayDaily = [];
-            
+            late List<String> feelsLike = [];
+            late List<String> day = [];
+
             for(int i = 1; i < weatherDaily!.daily.length; i++){
-              dateTimeDaily.add(DateTime.fromMillisecondsSinceEpoch(weatherDaily!.daily[i].dt!.toInt() * 1000).toString());
               iconDaily.add(weatherDaily!.daily[i].weather[0].icon.toString());
               mainDaily.add(weatherDaily!.daily[i].weather[0].main.toString()); 
               tempDayDaily.add(weatherDaily!.daily[i].temp!.day!.round().toString());
+              feelsLike.add(weatherDaily!.daily[i].feelsLike!.day!.round().toString());
+              day.add(DateFormat('EEEE').format(DateTime.parse(DateTime.fromMillisecondsSinceEpoch(weatherDaily!.daily[i].dt!.toInt() * 1000).toString())).replaceAll('day' ,'').toString());
+              if(DateFormat('EEEE').format(DateTime.parse(DateTime.fromMillisecondsSinceEpoch(weatherDaily!.daily[i].dt!.toInt() * 1000).toString())).toString().contains('nes')){
+                day.last = day.last.replaceAll('nes','').toString();
+              }
             }
-            return Column(
-              children: [
-                CardInformasiCuacaMax(StringUkuranCard: "min", icon: weatherDaily!.daily[1].weather[0].icon.toString(), 
-                description: weatherDaily!.daily[1].weather[0].description.toString(), day: weatherDaily!.daily[1].temp!.day!.round().toString(), 
-                windSpeed: weatherDaily!.daily[1].windSpeed!.round().toString(), rain: weatherDaily!.daily[1].rain!.round().toString(), 
-                humidity: weatherDaily!.daily[1].humidity!.round().toString()),
-                ListViewCuaca(hari: dateTimeDaily, icon: iconDaily, mainCuaca: mainDaily, temperatur: tempDayDaily, dataLength: weatherDaily!.daily.length-1, scrollController: scrollController),
-                if(loading)...[
-                  Positioned(
-                    child: SizedBox(
-                      height: 80.h,
-                      width: 80.w,
-                      child: const Center(
-                        child: CircularProgressIndicator(),
-                      ),
+
+            return Stack(children: <Widget>[
+              RefreshIndicator(
+                onRefresh: _refreshPage, 
+                child: Column(
+                  children: [
+                    CardInformasiCuacaMax(StringUkuranCard: "min", icon: weatherDaily!.daily[1].weather[0].icon.toString(), 
+                    description: weatherDaily!.daily[1].weather[0].description.toString(), day: weatherDaily!.daily[1].temp!.day!.round().toString(), 
+                    windSpeed: weatherDaily!.daily[1].windSpeed!.round().toString(), rain: weatherDaily!.daily[1].rain!.round().toString(), 
+                    humidity: weatherDaily!.daily[1].humidity!.round().toString(), feelsLike: weatherDaily!.daily[1].feelsLike!.day!.round().toString()),
+                    ListViewCuaca(hari: day, icon: iconDaily, mainCuaca: mainDaily, temperatur: tempDayDaily,
+                    dataLength: weatherDaily!.daily.length-1, scrollController: scrollController, feelsLike: feelsLike),
+                  ],
+                ),
+              ),
+              if(loading)...[
+                Positioned(
+                  left: 0,
+                  bottom: 0,
+                  child: SizedBox(
+                    height: 80.h,
+                    width: 80.w,
+                    child: const Center(
+                      child: CircularProgressIndicator(),
                     ),
                   ),
-                ],
+                ),
               ],
-            );
+            ]);
           }else{
             return Column(children: [
                Skeleton(width: size.width.w, hight: (size.width.h - 50.h), jenis: "topCard"),
