@@ -1,5 +1,6 @@
 import 'package:aplikasi_cuaca/componen/card_informasi_cuaca.dart';
 import 'package:aplikasi_cuaca/componen/constans.dart';
+import 'package:aplikasi_cuaca/componen/isi_card_informasi_max.dart';
 import 'package:aplikasi_cuaca/componen/skeleton.dart';
 import 'package:aplikasi_cuaca/model/weather_hourly.dart';
 import 'package:aplikasi_cuaca/model/weather_now.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 
 class Page1 extends StatefulWidget {
   const Page1({ Key? key }) : super(key: key);
@@ -21,11 +23,13 @@ class Page1 extends StatefulWidget {
 class _Page1State extends State<Page1> with Geolocation{
   late Future<WeatherHourly> futures1 = getDataWeatherHourly();
   late Future<WeatherNow> futures2 = getDataWeatherNow(); 
-  
+  late String jamNow;
+
   Future _refreshPage() async{
     await Future.delayed(const Duration(milliseconds: 500));
     futures1 = getDataWeatherHourly();
     futures2 = getDataWeatherNow();
+    jamNow = DateFormat('mm', 'id').format(DateTime.now());
   }
 
   @override
@@ -60,15 +64,14 @@ class _Page1State extends State<Page1> with Geolocation{
               icon.add(weatherHour!.hourly[i].weather[0].icon.toString());
             }
             late DateTime dateTimeNow = DateTime.fromMillisecondsSinceEpoch(weatherNow!.dt!.toInt() * 1000);
+            jamNow = DateFormat('mm', 'id').format(DateTime.now());
             return RefreshIndicator(
               onRefresh: _refreshPage, 
               child: Column(children: [
-                CardInformasiCuacaMax(
-                  StringUkuranCard: "max", 
-                  nameLokasi: weatherNow!.name.toString(), icon: weatherNow!.weather[0].icon.toString(), mainCuaca: weatherNow!.weather[0].main.toString(),
+                IsiCardInformasiMax(nameLokasi: weatherNow!.name.toString(), icon: weatherNow!.weather[0].icon.toString(), mainCuaca: weatherNow!.weather[0].main.toString(),
                   temperatur: weatherNow!.main!.temp!.round().toString(), windSpeed: weatherNow!.wind!.speed!.round().toString(),
                   humidity: weatherNow!.main!.humidity!.round().toString(), clouds: weatherNow!.clouds!.all!.round().toString(),
-                  dateTime: dateTimeNow.toString()),
+                  dateTime: dateTimeNow.toString(), jamNow: jamNow.toString(),),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
                   child: Row(

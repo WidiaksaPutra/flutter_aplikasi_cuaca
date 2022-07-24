@@ -1,6 +1,7 @@
 import 'package:aplikasi_cuaca/componen/card_informasi_cuaca.dart';
 import 'package:aplikasi_cuaca/componen/constans.dart';
-import 'package:aplikasi_cuaca/page/class/class_list_view_cuaca.dart';
+import 'package:aplikasi_cuaca/componen/isi_card_informasi_min.dart';
+import 'package:aplikasi_cuaca/componen/list_cuaca.dart';
 import 'package:aplikasi_cuaca/componen/skeleton.dart';
 import 'package:aplikasi_cuaca/model/weather_daily.dart';
 import 'package:aplikasi_cuaca/service/classGeolocation.dart';
@@ -85,12 +86,20 @@ class _Page2State extends State<Page2> with Geolocation{
                 onRefresh: _refreshPage, 
                 child: Column(
                   children: [
-                    CardInformasiCuacaMax(StringUkuranCard: "min", icon: weatherDaily!.daily[1].weather[0].icon.toString(), 
-                    description: weatherDaily!.daily[1].weather[0].description.toString(), day: weatherDaily!.daily[1].temp!.day!.round().toString(), 
-                    windSpeed: weatherDaily!.daily[1].windSpeed!.round().toString(), rain: weatherDaily!.daily[1].rain!.round().toString(), 
-                    humidity: weatherDaily!.daily[1].humidity!.round().toString(), feelsLike: weatherDaily!.daily[1].feelsLike!.day!.round().toString()),
-                    ListViewCuaca(hari: day, icon: iconDaily, mainCuaca: mainDaily, temperatur: tempDayDaily,
-                    dataLength: weatherDaily!.daily.length-1, scrollController: scrollController, feelsLike: feelsLike),
+                    IsiCardInformasiMin(icon: weatherDaily!.daily[1].weather[0].icon.toString(), 
+                      description: weatherDaily!.daily[1].weather[0].description.toString(), day: weatherDaily!.daily[1].temp!.day!.round().toString(), 
+                      windSpeed: weatherDaily!.daily[1].windSpeed!.round().toString(), rain: weatherDaily!.daily[1].rain!.round().toString(), 
+                      humidity: weatherDaily!.daily[1].humidity!.round().toString(), feelsLike: weatherDaily!.daily[1].feelsLike!.day!.round().toString()),
+                    Expanded(
+                      child: ListView.builder(
+                      controller: scrollController,
+                      scrollDirection: Axis.vertical,
+                      itemCount: weatherDaily!.daily.length-1,
+                        itemBuilder: (context, index){
+                          return ListCuaca(hari: day[index], icon: iconDaily[index], mainCuaca: mainDaily[index], temperatur: tempDayDaily[index], feelsLike: feelsLike[index]);
+                        },
+                      ),
+                    ),
                   ],
                 ),
               ),

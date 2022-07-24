@@ -1,18 +1,12 @@
 import 'package:aplikasi_cuaca/componen/constans.dart';
-import 'package:aplikasi_cuaca/componen/isi_card_informasi_max.dart';
-import 'package:aplikasi_cuaca/componen/isi_card_informasi_min.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CardInformasiCuacaMax extends StatelessWidget {
-  final String StringUkuranCard,nameLokasi, icon, mainCuaca, description, dateTime, temperatur, windSpeed, day, rain, humidity, clouds, feelsLike;
+class CardInformasiCuaca extends StatelessWidget {
+  final Widget child;
 
-  CardInformasiCuacaMax({ Key? key, 
-  required this.StringUkuranCard,
-  this.nameLokasi = "-", this.icon = "-", this.mainCuaca = "-", this.description = "-",
-  this.temperatur = "0.0", this.windSpeed = "0.0", this.day = "0.0", this.rain = "0.0",
-  this.humidity = "0", this.clouds = "0",
-  this.dateTime = "-", this.feelsLike = "0.0"}) : super(key: key);
+  const CardInformasiCuaca({ Key? key, 
+  required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +40,7 @@ class CardInformasiCuacaMax extends StatelessWidget {
         ),
         borderRadius: BorderRadius.only(bottomLeft: Radius.circular(60.r), bottomRight: Radius.circular(60.r)),
       ),
-      child: (StringUkuranCard == "max") 
-      ? IsiCardInformasiMax(nameLokasi: nameLokasi, icon: icon, mainCuaca: mainCuaca, temperatur: temperatur, windSpeed: windSpeed, humidity: humidity, clouds: clouds, dateTime: dateTime)
-      : IsiCardInformasiMin(icon: icon, description: description, day: day, windSpeed: windSpeed, rain: rain, humidity: humidity, feelsLike: feelsLike)
+      child: child,
     );
   }
 }
