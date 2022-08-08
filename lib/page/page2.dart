@@ -1,10 +1,13 @@
-import 'package:aplikasi_cuaca/componen/card_informasi_cuaca.dart';
 import 'package:aplikasi_cuaca/componen/constans.dart';
 import 'package:aplikasi_cuaca/componen/isi_card_informasi_min.dart';
 import 'package:aplikasi_cuaca/componen/list_cuaca.dart';
 import 'package:aplikasi_cuaca/componen/skeleton.dart';
 import 'package:aplikasi_cuaca/model/weather_daily.dart';
-import 'package:aplikasi_cuaca/service/classGeolocation.dart';
+import 'package:aplikasi_cuaca/page/class/button_next_spaceBetween1.dart';
+import 'package:aplikasi_cuaca/page/class/class_size_mediaquery.dart';
+import 'package:aplikasi_cuaca/page/page1.dart';
+import 'package:aplikasi_cuaca/service/class_geolocation.dart';
+import 'package:aplikasi_cuaca/page/class/class_responive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -17,7 +20,7 @@ class Page2 extends StatefulWidget {
   State<Page2> createState() => _Page2State();
 }
 
-class _Page2State extends State<Page2> with Geolocation{
+class _Page2State extends State<Page2> with Geolocation, sizeMediaquery{
   late Future<WeatherDaily> futures = getDataWeatherDaily();  
   final ScrollController scrollController = ScrollController();
   bool loading = false;
@@ -56,7 +59,7 @@ class _Page2State extends State<Page2> with Geolocation{
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    getSizeMediaquery(context);
     return Scaffold(
       body: Container(
         color: blackColor,
@@ -81,26 +84,53 @@ class _Page2State extends State<Page2> with Geolocation{
               }
             }
 
-            return Stack(children: <Widget>[
+            return LayoutBuilder( builder: (context, constraints){
+              return Stack(children: <Widget>[
               RefreshIndicator(
                 onRefresh: _refreshPage, 
-                child: Column(
-                  children: [
-                    IsiCardInformasiMin(icon: weatherDaily!.daily[1].weather[0].icon.toString(), 
-                      description: weatherDaily!.daily[1].weather[0].description.toString(), day: weatherDaily!.daily[1].temp!.day!.round().toString(), 
-                      windSpeed: weatherDaily!.daily[1].windSpeed!.round().toString(), rain: weatherDaily!.daily[1].rain!.round().toString(), 
-                      humidity: weatherDaily!.daily[1].humidity!.round().toString(), feelsLike: weatherDaily!.daily[1].feelsLike!.day!.round().toString()),
-                    Expanded(
-                      child: ListView.builder(
-                      controller: scrollController,
-                      scrollDirection: Axis.vertical,
-                      itemCount: weatherDaily!.daily.length-1,
-                        itemBuilder: (context, index){
-                          return ListCuaca(hari: day[index], icon: iconDaily[index], mainCuaca: mainDaily[index], temperatur: tempDayDaily[index], feelsLike: feelsLike[index]);
-                        },
+                child: OrientationDevice(
+                  portrait: Column(
+                    children: [
+                      IsiCardInformasiMin(icon: weatherDaily!.daily[1].weather[0].icon.toString(), 
+                        description: weatherDaily!.daily[1].weather[0].description.toString(), day: weatherDaily!.daily[1].temp!.day!.round().toString(), 
+                        windSpeed: weatherDaily!.daily[1].windSpeed!.round().toString(), rain: weatherDaily!.daily[1].rain!.round().toString(), 
+                        humidity: weatherDaily!.daily[1].humidity!.round().toString(), feelsLike: weatherDaily!.daily[1].feelsLike!.day!.round().toString()),
+                      const BottonNextSpaceBetween1(page: Page1(), leftText: "Tomorrow", rightText: "7 days "),
+                      Expanded(
+                        child: ListView.builder(
+                        controller: scrollController,
+                        scrollDirection: Axis.vertical,
+                        itemCount: weatherDaily!.daily.length-1,
+                          itemBuilder: (context, index){
+                            return ListCuaca(hari: day[index], icon: iconDaily[index], mainCuaca: mainDaily[index], temperatur: tempDayDaily[index], feelsLike: feelsLike[index]);
+                          },
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ), 
+                  landscape: Row(
+                    children: [
+                      IsiCardInformasiMin(icon: weatherDaily!.daily[1].weather[0].icon.toString(), 
+                        description: weatherDaily!.daily[1].weather[0].description.toString(), day: weatherDaily!.daily[1].temp!.day!.round().toString(), 
+                        windSpeed: weatherDaily!.daily[1].windSpeed!.round().toString(), rain: weatherDaily!.daily[1].rain!.round().toString(), 
+                        humidity: weatherDaily!.daily[1].humidity!.round().toString(), feelsLike: weatherDaily!.daily[1].feelsLike!.day!.round().toString()),
+                      Expanded(
+                        child: Column(children: [
+                          const BottonNextSpaceBetween1(page: Page1(), leftText: "Tomorrow", rightText: "7 days "),
+                          Expanded(
+                            child: ListView.builder(
+                            controller: scrollController,
+                            scrollDirection: Axis.vertical,
+                            itemCount: weatherDaily!.daily.length-1,
+                              itemBuilder: (context, index){
+                                return ListCuaca(hari: day[index], icon: iconDaily[index], mainCuaca: mainDaily[index], temperatur: tempDayDaily[index], feelsLike: feelsLike[index]);
+                              },
+                            ),
+                          ),
+                        ]),
+                      ),
+                    ],
+                  ), 
                 ),
               ),
               if(loading)...[
@@ -108,8 +138,8 @@ class _Page2State extends State<Page2> with Geolocation{
                   left: 0,
                   bottom: 0,
                   child: SizedBox(
-                    height: 80.h,
-                    width: 80.w,
+                    height: getHaight(80).h,
+                    width: constraints.maxWidth.w,
                     child: const Center(
                       child: CircularProgressIndicator(),
                     ),
@@ -117,19 +147,29 @@ class _Page2State extends State<Page2> with Geolocation{
                 ),
               ],
             ]);
+            });
           }else{
-            return Column(children: [
-               Skeleton(width: size.width.w, hight: (size.width.h - 50.h), jenis: "topCard"),
-               Expanded(
+            return 
+            Column(children: [
+              Skeleton(width: sizeMediaquery.sizeWidth.w, hight: (sizeMediaquery.sizeHeight - getHaight(400)).h, jenis: "topCard"),
+              SizedBox(height: getHaight(15).h),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Skeleton(hight: getHaight(30).h, width: getWidth(80).w, jenis: "centerCard"),
+                  Skeleton(hight: getHaight(30).h, width: getWidth(80).w, jenis: "centerCard"),
+                ]
+              ),
+              Expanded(
                 child: ListView.builder(
                   itemCount: 7,
                   itemBuilder: (context, index){
                     return Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10.h),
+                      padding: EdgeInsets.symmetric(vertical: getHaight(10).h),
                       child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Skeleton(width: (size.width-10.w), hight: 60.h, jenis: "bottomCard"),
+                        Skeleton(width: (sizeMediaquery.sizeWidth-10).w, hight: getHaight(60).h, jenis: "bottomCard"),
                       ],),
                     );
                   }

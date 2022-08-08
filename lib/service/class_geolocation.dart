@@ -46,7 +46,7 @@ mixin Geolocation{
         return weatherNow = await _apiWeather.fetchDataWeatherNow(lat : "-8.7982674" , lon : "-8.7982674");
       }
       else{
-      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
         _latitude = position.latitude;
         _longitude = position.longitude;
         // print(_latitude);
@@ -64,11 +64,11 @@ mixin Geolocation{
         return weatherHour = await _apiWeather.fetchDataWeatherHourly(lat : "-8.7982674" , lon : "-8.7982674");
       }
       else{
-      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
         _latitude = position.latitude;
         _longitude = position.longitude;
       return weatherHour = await _apiWeather.fetchDataWeatherHourly(lat : _latitude.toString(), lon : _longitude.toString());  
-      }// return weatherHour = await _apiWeather.fetchDataWeatherHourly(lat : "${getPosition(latitude: 'lat')}", lon : "${getPosition(longitude: 'long')}");
+     }// return weatherHour = await _apiWeather.fetchDataWeatherHourly(lat : "${getPosition(latitude: 'lat')}", lon : "${getPosition(longitude: 'long')}");
   }
 
   Future<WeatherDaily> getDataWeatherDaily() async{
@@ -79,7 +79,7 @@ mixin Geolocation{
         return weatherDaily = await _apiWeather.fetchDataWeatherDaily(lat : "-8.7982674" , lon : "-8.7982674");
       }
       else{
-      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
         _latitude = position.latitude;
         _longitude = position.longitude;
       return weatherDaily = await _apiWeather.fetchDataWeatherDaily(lat : _latitude.toString(), lon : _longitude.toString());

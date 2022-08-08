@@ -1,4 +1,6 @@
 import 'package:aplikasi_cuaca/componen/constans.dart';
+import 'package:aplikasi_cuaca/page/class/class_size_mediaquery.dart';
+import 'package:aplikasi_cuaca/page/class/class_responive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -13,19 +15,20 @@ class ListCuaca extends StatefulWidget {
   State<ListCuaca> createState() => _ListCuacaState();
 }
 
-class _ListCuacaState extends State<ListCuaca>{
+class _ListCuacaState extends State<ListCuaca> with sizeMediaquery{
   
   @override
   Widget build(BuildContext context) {
+    getSizeMediaquery(context);
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 10.h),
+      padding: EdgeInsets.symmetric(vertical: getHaight(10).h),
       child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Text(widget.hari, style: TextStyle(fontSize: 18.sp, color: whiteShadowColor, fontFamily: "OpenSauceSans")),
         Row(
           children: [
-            Image.network('http://openweathermap.org/img/wn/${widget.icon}.png'),
+            (getWidthVisible() == false) ? const Text("") : Image.network('http://openweathermap.org/img/wn/${widget.icon}.png'),
             Text(widget.mainCuaca, style: TextStyle(fontSize: 18.sp, color: whiteShadowColor, fontFamily: "OpenSauceSans")),
           ],
         ),
