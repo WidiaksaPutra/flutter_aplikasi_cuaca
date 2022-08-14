@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 
-mixin sizeMediaquery{
+mixin sizeDevice{
   static late MediaQueryData mediaQuery;
   static late double sizeHeight, sizeWidth;
-  void getSizeMediaquery(BuildContext context){
+  void getsizeDevice(BuildContext context){
     mediaQuery = MediaQuery.of(context);
     sizeHeight = mediaQuery.size.height;
     sizeWidth = mediaQuery.size.width;
@@ -45,7 +45,23 @@ mixin sizeMediaquery{
     }
   }
 
-  bool getWidthVisible(){
+  bool getWidthVisiblePortrait(){
+    if(sizeWidth < 360.0) {
+      return false;
+    } else{
+      return true;
+    }
+  }
+
+  bool getHeightVisiblePortrait(){
+    if(sizeHeight < 670.0) {
+      return false;
+    } else{
+      return true;
+    }
+  }
+
+  bool getWidthVisibleLanscape(){
     if(sizeWidth < 390.0) {
       return false;
     } else{
@@ -53,8 +69,8 @@ mixin sizeMediaquery{
     }
   }
 
-  bool getHeightVisible(){
-    if(sizeHeight < 670.0) {
+  bool getHeightVisibleLanscape(){
+    if(sizeHeight < 300.0) {
       return false;
     } else{
       return true;

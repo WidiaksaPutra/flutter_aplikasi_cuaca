@@ -5,7 +5,7 @@ import 'package:aplikasi_cuaca/service/class_geolocation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:aplikasi_cuaca/page/class/class_size_mediaquery.dart';
+import 'package:aplikasi_cuaca/page/class/class_size_device.dart';
 
 class BottonNextSpaceBetween1 extends StatefulWidget {
   final Widget page;
@@ -16,10 +16,10 @@ class BottonNextSpaceBetween1 extends StatefulWidget {
   State<BottonNextSpaceBetween1> createState() => _BottonNextSpaceBetween1State();
 }
 
-class _BottonNextSpaceBetween1State extends State<BottonNextSpaceBetween1> with Geolocation, sizeMediaquery{
+class _BottonNextSpaceBetween1State extends State<BottonNextSpaceBetween1> with Geolocation, sizeDevice{
   @override
   Widget build(BuildContext context) {
-    getSizeMediaquery(context);
+    getsizeDevice(context);
     late Future<WeatherHourly> futures1;
     late Future<WeatherNow> futures2;
     return Padding(

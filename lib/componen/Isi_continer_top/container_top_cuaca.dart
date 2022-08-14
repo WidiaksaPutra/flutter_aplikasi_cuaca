@@ -1,5 +1,7 @@
+import 'package:aplikasi_cuaca/componen/Isi_continer_top/mobile/landscape.dart';
+import 'package:aplikasi_cuaca/componen/Isi_continer_top/mobile/portrait.dart';
 import 'package:aplikasi_cuaca/componen/constans.dart';
-import 'package:aplikasi_cuaca/page/class/class_size_mediaquery.dart';
+import 'package:aplikasi_cuaca/page/class/class_size_device.dart';
 import 'package:aplikasi_cuaca/page/class/class_responive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -39,40 +41,20 @@ class _ContainerTopCuaca extends State<ContainerTopCuaca> {
   }
 }
 
-class IsiContinerTop extends StatelessWidget with sizeMediaquery{
+class IsiContinerTop extends StatelessWidget with sizeDevice{
   final String icon, param1, param2;
   const IsiContinerTop({ Key? key, required this.icon, required this.param1, required this.param2}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    getSizeMediaquery(context);
+    getsizeDevice(context);
     return Expanded(
       flex: 3,
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: getWidth(4).w),
         child: OrientationDevice(
-          portrait: SizedBox(
-            height: getHaight(100).h,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                (getWidthVisible() == false) ? const Text("") : Image.network('http://openweathermap.org/img/wn/$icon.png'),
-                Text(param1, textAlign: TextAlign.center, style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.bold, color: whiteColor, fontFamily: "OpenSauceSans"),),
-                Text(param2, textAlign: TextAlign.center, style: TextStyle(fontSize: 12.sp, color: whiteShadowColor, fontFamily: "OpenSauceSans")),
-              ],  
-            ),
-          ),
-          landscape: SizedBox(
-            height: getHaight(50).h,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                (getWidthVisible() == false) ? const Text("") : Image.network('http://openweathermap.org/img/wn/$icon.png'),
-                Text(param1, textAlign: TextAlign.center, style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.bold, color: whiteColor, fontFamily: "OpenSauceSans"),),
-                Text(param2, textAlign: TextAlign.center, style: TextStyle(fontSize: 12.sp, color: whiteShadowColor, fontFamily: "OpenSauceSans")),
-              ],  
-            ),
-          ),
+          portrait: IsiContinerTopPortrait(icon: icon, param1: param1, param2: param2),
+          landscape: IsiContinerTopLandscape(icon: icon, param1: param1, param2: param2),
         ),
       ),
     );

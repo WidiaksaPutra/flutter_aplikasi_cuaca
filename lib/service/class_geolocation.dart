@@ -52,6 +52,7 @@ mixin Geolocation{
         // print(_latitude);
         // print(_longitude);
     // return weatherNow = await _apiWeather.fetchDataWeatherNow(lat : getPosition(latitude: 'lat').toString(), lon : getPosition(longitude: 'long').toString());
+        // return weatherNow = await _apiWeather.fetchDataWeatherNow(lat : "-8.7982674" , lon : "-8.7982674");
        return weatherNow = await _apiWeather.fetchDataWeatherNow(lat : _latitude.toString() , lon : _longitude.toString());
       }
   }

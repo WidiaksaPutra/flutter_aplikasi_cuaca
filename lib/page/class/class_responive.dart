@@ -1,8 +1,7 @@
-import 'package:aplikasi_cuaca/page/class/class_size_mediaquery.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
-class ResponsiveDevice extends StatelessWidget with sizeMediaquery{
+class ResponsiveDevice extends StatelessWidget{
   final Widget mobile;
   final Widget tablet;
   const ResponsiveDevice({ Key? key, required this.mobile, required this.tablet }) : super(key: key);

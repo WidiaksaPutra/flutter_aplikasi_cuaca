@@ -1,4 +1,4 @@
-import 'package:aplikasi_cuaca/page/page1.dart';
+import 'package:aplikasi_cuaca/page/page1/page1.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
